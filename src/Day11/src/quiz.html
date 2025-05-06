@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width initial-scale=1.0">
+	<title>GS Quiz</title>
+	<link rel="stylesheet" href="../css/quiz.css">
+    <script src="../server/server.js"></script>
+	<script src="../js/quiz.js"></script>
+</head>
+<body>
+    <div id="desktop">
+	    <div id="container">
+	        <header>
+	        	<h1> GS Quiz </h1>
+	        </header>
+
+	        <section id="question-zone">
+	        	<div id="question-div"></div>
+	        	<script id="script">
+	        		genQuestion();
+	        	</script>
+	        </section>
+	        <section>
+	        	<button id="submit" onclick="_on_submit_clicked()">Submit</button>
+	        </section>
+	    </div>
+    </div>
+</body>
+</html>
