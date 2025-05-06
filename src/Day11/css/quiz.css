@@ -1,0 +1,65 @@
+body{
+	transition: 0.5s background-color;
+}
+
+#desktop{
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	height: 100vh
+}
+
+#container{
+	width: 75%;
+	height: 70%;
+	border-radius: 15px;
+	border-style: solid;
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+#container > header > h1{
+	color: purple;
+	font-size: 60px
+}
+
+#container > section{
+	margin-top: 15%;
+}
+
+#container > section > p{
+	font-size: 12px;
+	font-style: italic;
+}
+
+#question-div{
+	font-size: 20px;
+	font-weight: bold;
+    margin-top: -10%;
+}
+
+.answer{
+	margin-left: 10px;
+}
+
+#container > section > button{
+	width: 150px;
+	height: 40px;
+	margin-top: 0px;
+	font-weight: bold;
+	color: white;
+	background-color: darkgreen;
+	border-style: none;
+	border-radius: 10px;
+}
+
+#container > section > button:hover{
+	background-color: lime;
+	color: black;
+	border-style: none;
+	border-radius: 10px;
+}
