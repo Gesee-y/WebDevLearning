@@ -9,10 +9,12 @@
 
 #container{
 	width: 75%;
-	height: 60%;
+	height: 70%;
 	border-radius: 15px;
 	border-style: solid;
-    background-color: maroon;
+    background-image: url("../img/main_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -33,13 +35,15 @@
 #container > section > button{
 	width: 150px;
 	height: 40px;
-	background-color: lime;
+	font-weight: bold;
+	color: white;
+	background-color: darkgreen;
 	border-style: none;
 	border-radius: 10px;
 }
 
 #container > section > button:hover{
-	background-color: white;
+	background-color: lime;
 	color: black;
 	border-style: none;
 	border-radius: 10px;
