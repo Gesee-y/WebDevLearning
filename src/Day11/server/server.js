@@ -5,28 +5,28 @@ I will just hard code the datas
 */
 
 // Since I don't know how to make a real database for now, we will just use this.
-const question_table = {
-    "What is the capital of Cameroon?": [["Buea", false], ["New York", false], ["Yaounde", true]],
-    "What is the largest planet in our solar system?": [["Earth", false], ["Jupiter", true], ["Mars", false]],
-    "Who wrote 'Romeo and Juliet'?": [["William Shakespeare", true], ["Charles Dickens", false], ["Jane Austen", false]],
-    "What is the chemical symbol for water?": [["O2", false], ["H2O", true], ["CO2", false]],
-    "Which language is primarily spoken in Brazil?": [["Spanish", false], ["Portuguese", true], ["French", false]],
-    "What is the result of 7 * 6?": [["42", true], ["36", false], ["48", false]],
-    "Which animal is known as the king of the jungle?": [["Elephant", false], ["Lion", true], ["Tiger", false]],
-    "Who painted the Mona Lisa?": [["Leonardo da Vinci", true], ["Pablo Picasso", false], ["Michelangelo", false]],
-    "What is the capital city of Japan?": [["Seoul", false], ["Beijing", false], ["Tokyo", true]],
-    "What gas do humans need to breathe to survive?": [["Oxygen", true], ["Carbon dioxide", false], ["Nitrogen", false]],
-    "Which ocean is the largest?": [["Atlantic Ocean", false], ["Arctic Ocean", false], ["Pacific Ocean", true]],
-    "What is the boiling point of water at sea level in Celsius?": [["100", true], ["90", false], ["80", false]],
-    "Who discovered gravity when an apple fell on his head?": [["Albert Einstein", false], ["Isaac Newton", true], ["Galileo Galilei", false]],
-    "Which continent is Egypt located in?": [["Asia", false], ["Africa", true], ["Europe", false]],
-    "What color is chlorophyll?": [["Green", true], ["Red", false], ["Blue", false]],
-    "Which planet is closest to the sun?": [["Venus", false], ["Mercury", true], ["Earth", false]],
-    "What is the square root of 64?": [["8", true], ["6", false], ["10", false]],
-    "How many continents are there?": [["5", false], ["7", true], ["6", false]],
-    "What is the hardest natural substance on Earth?": [["Diamond", true], ["Gold", false], ["Iron", false]],
-    "Who was the first man to walk on the moon?": [["Neil Armstrong", true], ["Buzz Aldrin", false], ["Yuri Gagarin", false]]
-};
+const question_table = [
+    ["What is the capital of Cameroon?", [["Buea", 0], ["New York", 0], ["Yaounde", 1]]],
+    ["What is the largest planet in our solar system?", [["Earth", 0], ["Jupiter", 1], ["Mars", 0]]],
+    ["Who wrote 'Romeo and Juliet'?", [["William Shakespeare", 1], ["Charles Dickens", 0], ["Jane Austen", 0]]],
+    ["What is the chemical symbol for water?", [["O2", 0], ["H2O", 1], ["CO2", 0]]],
+    ["Which language is primarily spoken in Brazil?", [["Spanish", 0], ["Portuguese", 1], ["French", 0]]],
+    ["What is the result of 7 * 6?", [["42", 1], ["36", 0], ["48", 0]]],
+    ["Which animal is known as the king of the jungle?", [["Elephant", 0], ["Lion", 1], ["Tiger", 0]]],
+    ["Who painted the Mona Lisa?", [["Leonardo da Vinci", 1], ["Pablo Picasso", 0], ["Michelangelo", 0]]],
+    ["What is the capital city of Japan?", [["Seoul", 0], ["Beijing", 0], ["Tokyo", 1]]],
+    ["What gas do humans need to breathe to survive?", [["Oxygen", 1], ["Carbon dioxide", 0], ["Nitrogen", 0]]],
+    ["Which ocean is the largest?", [["Atlantic Ocean", 0], ["Arctic Ocean", 0], ["Pacific Ocean", 1]]],
+    ["What is the boiling point of water at sea level in Celsius?", [["100", 1], ["90", 0], ["80", 0]]],
+    ["Who discovered gravity when an apple fell on his head?", [["Albert Einstein", 0], ["Isaac Newton", 1], ["Galileo Galilei", 0]]],
+    ["Which continent is Egypt located in?", [["Asia", 0], ["Africa", 1], ["Europe", 0]]],
+    ["What color is chlorophyll?", [["Green", 1], ["Red", 0], ["Blue", 0]]],
+    ["Which planet is closest to the sun?", [["Venus", 0], ["Mercury", 1], ["Earth", 0]]],
+    ["What is the square root of 64?", [["8", 1], ["6", 0], ["10", 0]]],
+    ["How many continents are there?", [["5", 0], ["7", 1], ["6", 0]]],
+    ["What is the hardest natural substance on Earth?", [["Diamond", 1], ["Gold", 0], ["Iron", 0]]],
+    ["Who was the first man to walk on the moon?", [["Neil Armstrong", 1], ["Buzz Aldrin", 0], ["Yuri Gagarin", 0]]]
+];
 
 
 /*
@@ -38,6 +38,19 @@ class Answer{
 	constructor(val, correct){
 		this.val = val;
 		this.correct = correct;
+	}
+
+    isCorrect(){
+    	return Boolean(this.correct);
+    }
+
+    // Will add the answer to the current HTML file
+	render(){
+		document.write("<input type='checkbox' class='answer'>"+this.val);
+	}
+
+	toTag(){
+		return "<input type='checkbox' class='answer'>"+this.val;
 	}
 }
 
@@ -52,6 +65,31 @@ class Question{
 		this.question = question;
 		this.answers = shuffle(answers);
     }
+
+    render(){
+    	document.write("<div id='question-div'>");
+    	document.write("<p>"+this.question+"</p>");
+
+    	// Each answer will render himself
+    	let answers = this.answers[0];
+    	for (var i = 0; i < answers.length; i++)
+    		answers[i].render()
+
+    	document.write("</div>");
+    }
+
+    toTag(){
+    	let str = "";
+    	str += "<div id='question-div'>";
+    	str += "<p>"+this.question+"</p>";
+        
+        let answers = this.answers[0];
+    	for (var i = 0; i < answers.length; i++)
+    		str += answers[i].toTag();
+
+        str += "</div>"
+    	return str;    	
+    }
 }
 
 
@@ -61,7 +99,22 @@ class Question{
 Return the a table of questions
 */
 function getData(){
+    // We will transform the data into Question objects
 
+    let Q = new Array(); // Here is the Questions list
+
+    for (let i = 0; i < question_table.length; i++) {
+    	let A = new Array();
+
+    	for (let j = 0; j < question_table[i][1].length; j++) {
+    		let ans = new Answer(question_table[i][1][j][0], question_table[i][1][j][1]);
+    		A.push(ans);
+    	}
+    	let question = new Question(i, question_table[i][0], A);
+    	Q.push(question);
+    }
+
+    return Q;
 }
 
 /*
